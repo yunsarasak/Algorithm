@@ -1,0 +1,1 @@
+print('hello 모듈 시작')
