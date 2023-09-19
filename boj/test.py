@@ -1,6 +1,7 @@
 import subprocess
 import sys
 import os
+from itertools import *
 
 #print(len(sys.argv))
 
@@ -16,13 +17,31 @@ others_file = sys.argv[2]
 #make inputs
 #print("your command : [", "python", this_file_name, my_file, others_file, "]")
 
+dataset = [i for i in range(1, 6)]
 
-while True:
-    test_case = [5, 5, 4, 1, 3, 2]
+printList = list(permutations(dataset, 5))
+
+
+for j in range(len(printList)):
+    test_case = []
+    test_case.append(5)
+    test_case.extend(printList[j])
     #print(type(test_case))
 
     arg3 = ' '.join( str(e) for e in test_case)
 
+    print(test_case)
     subprocess.run(["python", "comp.py", arg3])
     subprocess.run(["python", "boj12789.py", arg3])
+    print("-------------")
 
+
+#test_case = [5, 2, 1, 3, 4, 5]
+#print(type(test_case))
+
+#arg3 = ' '.join( str(e) for e in test_case)
+
+#print(test_case)
+#subprocess.run(["python", "comp.py", arg3])
+#subprocess.run(["python", "boj12789.py", arg3])
+#print("-------------")

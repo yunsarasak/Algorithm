@@ -14,6 +14,8 @@ standing = list()
 for i in range(n):
     standing.append(int(arg_list[1 + i]))
 
+print(standing)
+
 stack = []
 target = 1
  

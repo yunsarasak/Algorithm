@@ -1,5 +1,5 @@
 from collections import deque
-import sys
+#import sys
 
 top = -1
 stack = deque()
@@ -30,40 +30,44 @@ def peek():
     else:
         return stack[top]
 
-args = sys.argv[1]
-arg_list = args.split(' ')
-#N = int(input())
-N = int(arg_list[0])
+#args = sys.argv[1]
+#arg_list = args.split(' ')
+N = int(input())
+#N = int(arg_list[0])
 
 count = 1
 answer = "Nice"
 
-#queue = list(map(int, input().split()))
-queue = deque()
-for i in range(N):
-    queue.append(int(arg_list[1 + i]))
+queue = list(map(int, input().split()))
+#queue = deque()
+#for i in range(N):
+#    queue.append(int(arg_list[1 + i]))
 
 
 #print(queue)
 
-for i in range(N):
-    #print(i, "iter")
+i = 0
+#print(N)
+
+while i < N:
+    #print("     ", i, "iter")
     num = queue[i] 
 
     if count == num:
         count+=1
         #print(num, "pass")
+        i+=1
         continue
     elif count == peek():
         temp = pop()
         count+=1
-        i -=1
         #print(temp, "poped")
         continue
     else:
         if (peek() == -1) or (peek() > num):
             push(num)
             #print(num, "pushed")
+            i+=1
             continue
         else:
             answer = "Sad"
