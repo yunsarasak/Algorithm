@@ -6,24 +6,36 @@ for i in range(N):
     origin.append(i + 1)
     isExist.append(1)
 
-#print(origin)
-
 answer = list()
 
-cursor = 0
+cursor = K % N - 1
 
-while len(answer) != N:
-    # count 1 by 1, 
-    cursor = (cursor + K) % (len(origin) - len(answer))
-    
-    # pop elm on origin
-    origin.pop(cursor)
-    
-    # append into answer
+while len(answer) != N-1:
+    #print(origin)
+    #print("cursor:", cursor)
+    if cursor == -1:
+        cursor = len(origin) - 1
+    index = cursor
+    #pop from origin
+    next = origin.pop(index)
+    #print(next)
 
-    target_index = K % list_len - 1
-    poped_num = origin.pop(target_index)
-    answer.append(poped_num)
-    list_len = len(origin) + 1
 
-print(answer)
+    #append to answer
+    answer.append(next)
+
+    #get next index
+    cursor = ((cursor + K) % (len(origin))) - 1
+
+answer.append(origin.pop())
+
+
+#print(answer)
+
+print("<", sep="", end="")
+for i in answer:
+    print(i, sep="", end="")
+    if i != answer[len(answer)-1]:
+        print(", ", sep="", end="")
+
+print(">")
