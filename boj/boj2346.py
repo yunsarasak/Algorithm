@@ -1,38 +1,51 @@
 #N, K = list(map(int, input().split()))
 
 N = int(input())
-next_offsets = list(map(int, input().split()))
+offsets = list(map(int, input().split()))
 
-origin = list()
+class Balloon:
+    def __init__(self, _index, _offset):
+        self.index = _index
+        self.offset = _offset
+
+    def print(self):
+        print("[", self.index, ",", self.offset, "]")
+
+balloon_list = list()
+
 for i in range(N):
-    origin.append(i + 1)
+    balloon_list.append(Balloon(i+1, offsets[i]))
 
 
 answer = list()
 
 cursor = 0
-K = next_offsets[0]
 
 while len(answer) != N-1:
-    print(origin)
-    print("cursor:", cursor)
-    if cursor == -1:
-        cursor = len(origin) - 1
-    index = cursor
-    #pop from origin
-    next = origin.pop(index)
-    print(next)
+    offset = balloon_list[cursor].offset
+    index = balloon_list[cursor].index
 
+    #balloon_list[cursor].print()
+    balloon_list.pop(cursor)
+    if cursor == 0:
+        cursor = len(balloon_list)
+    else:
+        cursor -= 1
 
-    #append to answer
-    answer.append(next)
+    #append answer
+    answer.append(index)
 
-    K = next_offsets[next]
+    #increase cursor
+    cursor = cursor + offset
 
-    #get next index
-    cursor = ((cursor + K) % (len(origin))) - 1
+    #modify to valid
+    if (cursor > len(balloon_list)):
+        cursor = cursor % len(balloon_list) - 1
+    elif (cursor < 0):
+        while( cursor < 0 ):
+            cursor+=len(balloon_list)
 
-answer.append(origin.pop())
+answer.append(balloon_list[0].index)
 
 
 #print(answer)

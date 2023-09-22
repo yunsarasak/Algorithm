@@ -1,8 +1,28 @@
 import sys
-import time
+import math
 
-start = time.time()
+def GetGCD( _a:int, _b:int ):
+    remain = 1
 
+    if ( _a > _b ):
+        min = _b
+        max = _a
+    else:
+        min = _a
+        max = _b
+
+    divisor = min
+    dividend = max
+    remain = max % min
+    ##print( dividend, "%", divisor, "=", remain)
+
+    while( remain ):
+        dividend = divisor
+        divisor = remain
+        remain = min % divisor
+        #print( dividend, "%", divisor, "=", remain)
+
+    return divisor
 
 
 A, B = list(map( int, sys.stdin.readline().split()))
@@ -15,45 +35,34 @@ _D = D
 A = A * D
 B = B * D
 
+#print("first : ", A)
+#print("first : ", B)
+
 C = C * _B
 D = D * _B
+#print("secod : ", C)
+#print("secod : ", D)
+
+#print(A)
+#print(C)
 
 answerMom = B
 
-answerSon = A + C
-
-if answerMom == 1:
-    print( answerSon, answerMom )
-else:
-    flag = 1
-    while flag:
-        for i in range(min(answerMom, answerSon), 0, -1):
-            #print(i)
-            if i == 1:
-                flag = 0
-                break
-            if (answerMom % i == 0) and (answerSon % i == 0):
-                #print( answerMom ,"divide by", i, end="")
-                answerMom = int(answerMom / i)
-                #print( " ",answerMom)
-
-                #print( answerSon ,"divide by", i, end="")
-                answerSon = int(answerSon / i)
-                #print(answerSon)
-
-                i = min(answerMom, answerSon)
+#print(A, "+", C, "=", A+C)
+answerSon = A+C
+#print(A, "+", C, "=", answerSon)
 
 
-    if answerMom % answerSon == 0:
-        answerMom = int(answerMom / answerSon)
-        answerSon = int(answerSon / answerSon)
+#get GCD
+#using euclidian algorithm
 
-    if answerSon % answerMom == 0:
-        answerSon = int(answerSon / answerMom)
-        answerMom = int(answerMom / answerMom)
-            
-    print( int(answerSon), int(answerMom) )
+gcd1 = GetGCD(answerMom, answerSon)
+gcd2 = math.gcd(answerMom, answerSon)
 
+print(gcd1)
+print(gcd2)
 
-end = time.time()
-print(end - start, "sec")
+answerMom = int(answerMom / gcd1)
+answerSon = int(answerSon / gcd1)
+
+print(answerSon, answerMom)
