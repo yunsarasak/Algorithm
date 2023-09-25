@@ -89,14 +89,14 @@ def checkAllSame( row_begin, col_begin, _size):
 #    print(checkAllSame(args[0], args[1], args[2]))
 
 
-        
-
 #for i in range(N):
 #    print(matrix[i])
 
 def CountConfetti(row:int, col:int, _size:int):
     global num_white
     global num_blue
+    #printMatrix(row, col, _size)
+    #print()
     ret = checkAllSame(row,col,_size)
     if num_blue == 1:
         print("1", end="")
@@ -108,17 +108,17 @@ def CountConfetti(row:int, col:int, _size:int):
     if(ret == 1):
         return
     else:
-        print("(", end="")
         next_size = _size//2
+        print("(", end="")
         CountConfetti(row,col, next_size)
-        CountConfetti(row + next_size,col, next_size)
         CountConfetti(row,col+next_size, next_size)
+        CountConfetti(row + next_size,col, next_size)
         CountConfetti(row+ next_size,col + next_size, next_size)
-    print(")", end ="")
+        print(")", end ="")
 
 CountConfetti(0,0,N)
 
-print(num_white)
-print(num_blue)
+#print(num_white)
+#print(num_blue)
 
 #printMatrix(0,0,8)
