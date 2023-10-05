@@ -1,3 +1,10 @@
+#cheat sheet
+#https://kyun2da.github.io/2020/08/30/BinomialCoefficient/
+
+import sys
+
+sys.setrecursionlimit(4000000)
+
 N, K = list(map(int,input().split()))
 
 def combi(n:int, m:int):
