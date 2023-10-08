@@ -2,15 +2,16 @@ dp = [ [ [ -1 for i in range(51) ] for i in range(51)] for i in range(51) ]
 
 def rec(a, b, c):
     global dp
-
-    if dp[a][b][c] != -1:
-        return dp[a][b][c]
+    print(a, b, c)
 
     if a<=0 or b<=0 or c<=0:
         return 1
 
     if a > 20 or b> 20 or c>20:
         return rec(20, 20, 20)
+
+    if dp[a][b][c] != -1:
+        return dp[a][b][c]
 
     if a < b and b < c:
         dp[a][b][c] = rec(a, b, c-1) + rec(a, b-1, c-1) - rec(a, b-1, c)
