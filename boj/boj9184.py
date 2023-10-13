@@ -2,7 +2,6 @@ dp = [ [ [ -1 for i in range(51) ] for i in range(51)] for i in range(51) ]
 
 def rec(a, b, c):
     global dp
-    print(a, b, c)
 
     if a<=0 or b<=0 or c<=0:
         return 1
