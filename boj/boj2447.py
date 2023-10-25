@@ -1,37 +1,86 @@
-def PrintSquare(_flag:any):
-    print("***")
-    print("* *")
-    print("***", end="")
+import sys
+#import math
+
+#def PrintSquare(_flag:any):
+#    print("***")
+#    print("* *")
+#    print("***", end="")
+#
+#
+#def GetMaxDepth(_num:int):
+#    answer = 1
+#    while (True):
+#        powed = math.pow(3, answer)
+#        if powed == _num:
+#            return answer
+#        elif powed > _num:
+#            return -1
+#        else:
+#            answer += 1
 
 
-def Maximum3Multiple(_num:int):
-    answer = 1
-    while(True):
-        if _num > answer * 3:
-            break
-        else:
-            answer *= 3
+def GetMiddleList(_size:int):
+    answer = list()
+    starting_index = _size // 3
+    ending_index = starting_index * 2
+    for i in range(starting_index, ending_index):
+        answer.append(i)
 
     return answer
-        
 
 
-def IsCenter(_x:int, _y:int):
+#젤 큰 사각형에서 중간인가?
+#x 를 3으로 나누고 y를 3으로 나눴을때, 몫이 중간범윈가?
+#ex) 27 이라고한다면, 9 ~ 18 인가.
+#그 다음 사각형에서 중간인가?
+#그 다음...
+
+
+def IsCenter(_x:int, _y:int, _size:int):
+    #print(_x, _y)
     #중간인가? 중간이라면 찍기 중지
-    print(_x, _y)
-    if (_x == 1) and (_y == 1):
+    middle_list = GetMiddleList(_size)
+    #print(middle_list)
+    if (_x in middle_list) and (_y in middle_list):
+        #print(_x, _y, "both in middle")
         return True
-    elif ((_x == 0) or (_x == 2)) and ((_y == 0) or (_y == 2)):
+    #그게 아니고, 마지막 깊이인가
+    #그렇다면 중간이 아니므로 false 리턴
+    elif _size == 3:
         return False
     else:
-        return IsCenter( _x - Maximum3Multiple(_x), _y - Maximum3Multiple(_y) )
+        smaller_size = _size//3
+        new_pos = GetPositionInSmallerSqaure(_x, _y, _size)
+        new_x = new_pos[0]
+        new_y = new_pos[1]
+        return IsCenter(new_x, new_y, smaller_size)
     
 
-N = int(input())
+def GetPositionInSmallerSqaure(_x:int, _y:int, _current_size:int):
+    step = _current_size // 3
+    x, y = _x, _y
+    while ( x >= step ):
+        x -= step
+    while ( y >= step ):
+        y -= step
+    return x, y
+    
+
+N = int(sys.stdin.readline())
+#N = int(input())
+
+#max_detph = GetMaxDepth(N)
+#print("max depth : ", max_detph)
+
+#middle_list = GetMiddleList(N)
+#print(middle_list)
+
+
 
 for i in range(N):
     for j in range(N):
-        if IsCenter(i,j):
-            continue
+        if IsCenter(i, j, N) == True:
+            print(" ", end="")
         else:
             print("*", end="")
+    print()
