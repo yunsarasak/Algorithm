@@ -1,5 +1,5 @@
 import sys
-#import math
+import math
 
 #def PrintSquare(_flag:any):
 #    print("***")
@@ -19,6 +19,8 @@ import sys
 #            answer += 1
 
 middle = dict()
+temp_list = list()
+middle_list = list()
 
 
 
@@ -30,6 +32,8 @@ def GetMiddleList(_size:int):
     answer = list()
     starting_index = _size // 3
     ending_index = starting_index * 2
+    starting_index = int(starting_index)
+    ending_index = int(ending_index)
     for i in range(starting_index, ending_index):
         answer.append(i)
 
@@ -44,24 +48,16 @@ def GetMiddleList(_size:int):
 #그 다음...
 
 
-def IsCenter(_x:int, _y:int, _size:int):
+def IsCenter(_x:int, _y:int):
+    global middle_list
     #print(_x, _y)
     #중간인가? 중간이라면 찍기 중지
-    middle_list = GetMiddleList(_size)
     #print(middle_list)
     if (_x in middle_list) and (_y in middle_list):
         #print(_x, _y, "both in middle")
         return True
-    #그게 아니고, 마지막 깊이인가
-    #그렇다면 중간이 아니므로 false 리턴
-    elif _size == 3:
-        return False
     else:
-        smaller_size = _size//3
-        new_pos = GetPositionInSmallerSqaure(_x, _y, _size)
-        new_x = new_pos[0]
-        new_y = new_pos[1]
-        return IsCenter(new_x, new_y, smaller_size)
+        return False
     
 
 def GetPositionInSmallerSqaure(_x:int, _y:int, _current_size:int):
@@ -83,11 +79,29 @@ N = int(sys.stdin.readline())
 #middle_list = GetMiddleList(N)
 #print(middle_list)
 
+max_exp = 8
+exp = 1
+#print(max_exp)
+
+#init middle
+while True:
+    if exp == max_exp:
+        break
+    
+    #print(exp)
+    temp_list = GetMiddleList(math.pow(3, exp))
+    
+    middle_list = middle_list + temp_list
+
+    exp += 1
+
+
+
 
 
 for i in range(N):
     for j in range(N):
-        if IsCenter(i, j, N) == True:
+        if IsCenter(i, j) == True:
             print(" ", end="")
         else:
             print("*", end="")

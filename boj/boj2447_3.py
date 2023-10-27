@@ -18,23 +18,23 @@ import sys
 #        else:
 #            answer += 1
 
-middle = dict()
-
-
-
-def GetMiddleList(_size:int):
-    global middle
-    str_size = str(_size)
-    if str_size in middle:
-        return middle[str_size]
-    answer = list()
-    starting_index = _size // 3
-    ending_index = starting_index * 2
-    for i in range(starting_index, ending_index):
-        answer.append(i)
-
-    middle[str_size] = answer
-    return answer
+#middle = dict()
+#
+#
+#
+#def GetMiddleList(_size:int):
+#    global middle
+#    str_size = str(_size)
+#    if str_size in middle:
+#        return middle[str_size]
+#    answer = list()
+#    starting_index = _size // 3
+#    ending_index = starting_index * 2
+#    for i in range(starting_index, ending_index):
+#        answer.append(i)
+#
+#    middle[str_size] = answer
+#    return answer
 
 
 #젤 큰 사각형에서 중간인가?
@@ -45,34 +45,30 @@ def GetMiddleList(_size:int):
 
 
 def IsCenter(_x:int, _y:int, _size:int):
-    #print(_x, _y)
     #중간인가? 중간이라면 찍기 중지
-    middle_list = GetMiddleList(_size)
+    step = _size//3
+    #print(_x, _y)
+    #print(step)
+
     #print(middle_list)
-    if (_x in middle_list) and (_y in middle_list):
+    #print("is ", _x, ",", _y, "from ", step, "to", 2*step-1)
+    if ( (step <= _x) and (_x <= 2*step-1) ) and (  (step <= _y) and (_y <= 2*step-1) ):
         #print(_x, _y, "both in middle")
         return True
-    #그게 아니고, 마지막 깊이인가
-    #그렇다면 중간이 아니므로 false 리턴
-    elif _size == 3:
-        return False
     else:
-        smaller_size = _size//3
-        new_pos = GetPositionInSmallerSqaure(_x, _y, _size)
-        new_x = new_pos[0]
-        new_y = new_pos[1]
-        return IsCenter(new_x, new_y, smaller_size)
+        if _size == 3:
+            return False
+        return IsCenter(_x%step, _y%step, _size//3)
     
 
-def GetPositionInSmallerSqaure(_x:int, _y:int, _current_size:int):
-    step = _current_size // 3
-    x, y = _x, _y
-    while ( x >= step ):
-        x -= step
-    while ( y >= step ):
-        y -= step
-    return x, y
-    
+#def GetPositionInSmallerSqaure(_x:int, _y:int, _current_size:int):
+#    step = _current_size // 3
+#    x, y = _x, _y
+#    while ( x >= step ):
+#        x -= step
+#    while ( y >= step ):
+#        y -= step
+#    return x, y
 
 N = int(sys.stdin.readline())
 #N = int(input())
