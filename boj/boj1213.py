@@ -1,4 +1,21 @@
 #read input
+def GetCenterWhenAllEven():
+    global aligned_dicts
+    global character_to_be_cnetered
+    global input_string
+    global character_dicts
+
+    cursor_index = 0
+    cneter_index = len(input_string)//2-1
+
+    for i in aligned_dicts:
+        cursor_index += (character_dicts[i[0]]//2)
+        if cursor_index > cneter_index:
+            character_to_be_cnetered = i[0]
+
+    return
+        
+
 def PrintPalindrome():
     global aligned_dicts
     global character_to_be_cnetered
@@ -29,7 +46,7 @@ def PrintPalindrome():
     last_half = ''.join(first_half_list)
     return_string += last_half
     
-    print(center_index)
+    #print(center_index)
 
     return return_string
 
@@ -43,9 +60,7 @@ for character in range(ord('A'), ord('Z')+1):
 for input_character in input_string:
     character_dicts[input_character] += 1
 
-
 odd_count = 0
-
 answer = 0
 
 #check can be
@@ -60,13 +75,9 @@ for character in character_dicts:
             break
 
 if answer == -1:
-    print(answer)
+    print("I'm Sorry Hansoo")
 else:
     aligned_dicts = sorted(character_dicts.items(), key=lambda item:item[0])
+    #if there is no odd character, chose cneter
+    GetCenterWhenAllEven()
     print(PrintPalindrome())
-
-
-
-#align
-
-#make answer
