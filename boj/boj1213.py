@@ -1,54 +1,25 @@
-#read input
-def GetCenterWhenAllEven():
-    global aligned_dicts
-    global character_to_be_cnetered
-    global input_string
-    global character_dicts
+def GetPalindrome(_character_dicts, _center_string):
+    # 오름차순으로 1/2개씩 프린트
+    if _center_string == None:
+        return "I'm Sorry Hansoo"
 
-    cursor_index = 0
-    cneter_index = len(input_string)//2-1
+    returning_string = str()
+    first_half_string = str()
+    
+    for i in _character_dicts:
+        first_half_string += i*(_character_dicts[i] // 2)
 
-    for i in aligned_dicts:
-        cursor_index += (character_dicts[i[0]]//2)
-        if cursor_index > cneter_index:
-            character_to_be_cnetered = i[0]
+    last_half_string_list = list(first_half_string)
 
-    return
+    last_half_string_list.reverse()
+    last_half_string = ''.join(last_half_string_list)
+
+    returning_string = first_half_string + _center_string + last_half_string
+
+    return returning_string
+
+    
         
-
-def PrintPalindrome():
-    global aligned_dicts
-    global character_to_be_cnetered
-    global input_string
-    global character_dicts
-
-    center_index = len(input_string)//2 - character_dicts[character_to_be_cnetered]//2
-    cursor_index = 0
-
-    return_string = str()
-    first_half = str()
-
-    
-    for i in aligned_dicts:
-        if i[0] == character_to_be_cnetered:
-            continue
-        if cursor_index == center_index:
-            break
-            # cursor_index += character_dicts[character_to_be_cnetered]
-        first_half += i[0]*(character_dicts[i[0]]//2)
-        cursor_index += (character_dicts[i[0]]//2)
-
-        # print(cursor_index)
-    
-    return_string += first_half + character_to_be_cnetered*character_dicts[character_to_be_cnetered]
-    first_half_list = list(first_half)
-    first_half_list.reverse()
-    last_half = ''.join(first_half_list)
-    return_string += last_half
-    
-    #print(center_index)
-
-    return return_string
 
 input_string = input()
 
@@ -60,24 +31,31 @@ for character in range(ord('A'), ord('Z')+1):
 for input_character in input_string:
     character_dicts[input_character] += 1
 
-odd_count = 0
-answer = 0
 
-#check can be
+odd_count_character = list()
+
+# get center
 for character in character_dicts:
-    # count odd 
-    # if two or more odd, break
-    if character_dicts[character] % 2 != 0:
-        odd_count += 1
-        character_to_be_cnetered = character
-        if odd_count > 1:
-            answer = -1
-            break
+    if character_dicts[character] % 2 == 1:
+        odd_count_character.append(character)
 
-if answer == -1:
-    print("I'm Sorry Hansoo")
+#print("odd char : ", odd_count_character)
+if len(odd_count_character) == 0:
+    # 가장 뒤에 있는 문자가 모두가 cneter
+    for i in character_dicts:
+        center_character = i
+        if character_dicts[i] == 0:
+            break
+    center_string = center_character*character_dicts[center_character]
+elif len(odd_count_character) == 1:
+    # 하나 더 많은 문자가 중간으로
+    center_character = odd_count_character[0]
+    character_dicts[center_character] -= 1
+    center_string = center_character
 else:
-    aligned_dicts = sorted(character_dicts.items(), key=lambda item:item[0])
-    #if there is no odd character, chose cneter
-    GetCenterWhenAllEven()
-    print(PrintPalindrome())
+    # 만들 수 없음
+    center_string = None
+
+answer = GetPalindrome(character_dicts, center_string)
+
+print(answer)
