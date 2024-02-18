@@ -6,60 +6,67 @@ import sys
 
 N, M = list(map(int,sys.stdin.readline().split()))
 
-matrix = list()
+# init matrix
+matrix_sum = []
+matrix_input = []
 
-for row_index in range(N):
-    temp = list(map(int, sys.stdin.readline().split()))
-    matrix.append(temp)
+for i in range(N):
+    # 한 행을 입력받음
+    array_input = list(map(int, sys.stdin.readline().split()))
 
-# for row_index in range(N):
-#     print( matrix[row_index])
+    # 누적합 초기화
+    array_sum = [0 for _ in range(N)]
 
-from_to_lists = list()
-for _ in range(M):
-    from_to_list = list(map(int, sys.stdin.readline().split()))
-
-    from_to_lists.append(from_to_list)
-
-FROM_X = 0
-FROM_Y = 1
-TO_X = 2
-TO_Y = 3
-
-# for i in range(M):
-#     print( from_to_lists[i] )
-#     from_x = from_to_lists[i][FROM_X]
-#     from_y = from_to_lists[i][FROM_Y]
-#     to_x = from_to_lists[i][TO_X]
-#     to_y = from_to_lists[i][TO_Y]
-#     print("from(%d, %d)"%(from_x, from_y), "to(%d, %d)"%(to_x, to_y) )
-
-test_case = 0
-
-# def IsIncluded(_row_index, _col_index):
-#     global from_to_lists
-#     global test_case
-
-def SumFromTo(_from_x, _from_y, _to_x, _to_y):
-    global matrix
-
-    sum = 0
+    for j in range(N):
+        #만약 첫번째아이템이면 입력을 그대로 누적합으로 계산
+        if j == 0:
+            array_sum[j] = array_input[j]
+        #아니면 이전 누적합에다가 더함
+        else:
+            array_sum[j] = array_sum[j-1] + array_input[j]
     
-    for row_index in range(_from_x, _to_x+1):
-        for col_index in range(_from_y, _to_y+1):
-            #print("adding%d [%d][%d]" %(matrix[row_index][col_index], row_index, col_index))
-            sum += matrix[row_index][col_index]
+    #입력받은 행과, 누적합을 행렬변수에 기록
+    matrix_input.append(array_input)
+    matrix_sum.append(array_sum)
+
+
+# 시작점 ~ 끝점까지의 합을 구하는 함수
+def SumFromTo(from_x, from_y, to_x, to_y):
+    global matrix_sum
+    global matrix_input
+
+    # 리턴 값 초기화
+    sum = 0
+
+    for row_index in range(from_x, to_x+1):
+        # 행 단위로 누적합을 계산
+        sum += matrix_sum[row_index][to_y] - matrix_sum[row_index][from_y]
+
+        # 누적합을 기록한 행의 제일 오른쪽 값에서 왼쪽 값을 빼게되면 제일 왼쪽값은 합에서 제외되므로,
+        # 해당 값을 리턴값에 추가함.
+        # ex)       sum3 : a1 + a2 + a3
+        #           sum1 : a1
+        #    sum3 - sum1 :      a2 + a3
+        sum += matrix_input[row_index][from_y]
 
     return sum
 
+answer_list = []
 
-answer = list()
-for test_case in range(M):
-    from_x = from_to_lists[test_case][FROM_X] -1
-    from_y = from_to_lists[test_case][FROM_Y] -1
-    to_x = from_to_lists[test_case][TO_X] -1
-    to_y = from_to_lists[test_case][TO_Y] -1
-    partial_answer = SumFromTo(from_x, from_y, to_x, to_y)
-    print(partial_answer)
-    
-    answer.append(sum)
+for _ in range(M):
+    from_x, from_y, to_x, to_y = list(map(int,sys.stdin.readline().split()))
+
+    # 인덱스가 0부터 시작하는데 반해,
+    # 입력되는 인덱스가 1부터 시작되므로
+    # 값을 조정함
+    from_x -= 1
+    from_y -= 1
+    to_x -= 1
+    to_y -= 1
+
+    answer = SumFromTo(from_x, from_y, to_x, to_y)
+
+    answer_list.append(answer)
+
+for m in range(M):
+    print(answer_list[m])
