@@ -31,6 +31,7 @@ def diagonalDifference(arr):
         #print("sum_from_bottom_left %d added"%arr[row_index][row_length - col_index -1])
 
     answer = sum_from_bottom_left - sum_from_bottom_right
+    #abs 함수 쓰면댐
     if answer < 0:
         answer *= -1
         

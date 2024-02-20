@@ -26,7 +26,7 @@ def solution(n):
         three_ex_num += 1
         
         while not IsAcceptable(three_ex_num):
-            # acceptable하지 않다면 acceptable 할 때까지 count + 1
+            # acceptable하지 않다면 acceptable 할 때까지 three_ex_num + 1
             three_ex_num += 1
         actual_num += 1
     

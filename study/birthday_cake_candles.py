@@ -37,6 +37,7 @@ def birthdayCakeCandles(candles):
     max_counts = 0
     max_length = 0
 
+
     while num_of_candles:
         num_of_candles-=1
 
