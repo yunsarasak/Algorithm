@@ -94,23 +94,56 @@ def GetMaxFruit():
 
 
     max = 0
-    
-    for i in range(len(answer[0])):
+
+    if m == 1:
         for j in range(len(answer[1])):
-            sum = GetFruitSum(answer[0][i],answer[1][j])
+            sum = GetFruitSum(answer[0][i], None, None)
             if sum > max:
                 # MyPrint("answer is ",answer[0][i],"and", answer[1][j])
                 max = sum
+    elif m == 2:
+        for i in range(len(answer[0])):
+            for j in range(len(answer[1])):
+                sum = GetFruitSum(answer[0][i],answer[1][j], None)
+                if sum > max:
+                    # MyPrint("answer is ",answer[0][i],"and", answer[1][j])
+                    max = sum
+    else:
+        for i in range(len(answer[0])):
+            for j in range(len(answer[1])):
+                for k in range(len(answer[2])):
+                    sum = GetFruitSum(answer[0][i],answer[1][j], answer[1][k])
+                    if sum > max:
+                        # MyPrint("answer is ",answer[0][i],"and", answer[1][j])
+                        max = sum
+
+    
 
     return max
 
-def GetFruitSum(_route_a:list, _route_b:list):
+def GetFruitSum(_route_a:list, _route_b:list, _route_c:list):
     global fruit_matrix
     sum = 0
+    set_union = set()
     #https://rollingsnowball.tistory.com/entry/from-list-to-set-%EB%A6%AC%EC%8A%A4%ED%8A%B8%EB%A5%BC-%ED%95%B4%EC%8B%9C%ED%98%95-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85%EC%9D%B8-%EC%85%8B%EC%9C%BC%EB%A1%9C-%EB%B3%80%ED%99%98%ED%95%98%EA%B8%B0
-    set_a = set(list(map(tuple,_route_a)))
-    set_b = set(list(map(tuple,_route_b)))
-    set_union = set_a | set_b
+    if _route_a is None:
+        pass
+    else:
+        set_a = set(list(map(tuple,_route_a)))
+        set_union = set_union | set_a
+
+    if _route_b is None:
+        pass
+    else:
+        set_b = set(list(map(tuple,_route_b)))
+        set_union = set_union | set_b
+
+    if _route_c is None:
+        pass
+    else:
+        set_c = set(list(map(tuple,_route_c)))
+        set_union = set_union | set_c
+
     for i in set_union:
         sum += fruit_matrix[i[0]][i[1]]
     
