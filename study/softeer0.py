@@ -2,9 +2,25 @@
 
 import sys
 
-# def MyPrint(message, *args):
-#     #print(message % args)
-#     return 0
+def printMatrix(_list_to_print:list, _size:int, _pid:int):
+    #init mat
+    mat = [[0 for i in range(_size)] for i in range(_size)]
+
+    for j in range(4):
+        row = _list_to_print[j][0]
+        col = _list_to_print[j][1]
+        mat[row][col] = _pid
+
+    for i in range(len(mat)):
+        print(mat[i])
+
+    print()
+
+    return
+
+def MyPrint(message, *args):
+    print(message % args)
+    return 0
 
 def dfs(_path:list, _row, _col, _depth, _person_index):
     global n, m, answer
@@ -96,7 +112,7 @@ def GetMaxFruit():
     max = 0
 
     if m == 1:
-        for j in range(len(answer[1])):
+        for i in range(len(answer[0])):
             sum = GetFruitSum(answer[0][i], None, None)
             if sum > max:
                 # MyPrint("answer is ",answer[0][i],"and", answer[1][j])
@@ -107,14 +123,19 @@ def GetMaxFruit():
                 sum = GetFruitSum(answer[0][i],answer[1][j], None)
                 if sum > max:
                     # MyPrint("answer is ",answer[0][i],"and", answer[1][j])
+                    # print("answer is ",answer[0][i],"and", answer[1][j])
                     max = sum
     else:
         for i in range(len(answer[0])):
             for j in range(len(answer[1])):
                 for k in range(len(answer[2])):
-                    sum = GetFruitSum(answer[0][i],answer[1][j], answer[1][k])
+                    sum = GetFruitSum(answer[0][i],answer[1][j], answer[2][k])
                     if sum > max:
-                        # MyPrint("answer is ",answer[0][i],"and", answer[1][j])
+                        # MyPrint("answer is ",answer[0][i],"and", answer[1][j], "and", answer[2][k])
+                        # print("answer is ",answer[0][i],"and", answer[1][j], "and", answer[2][k])
+                        # printMatrix(answer[0][i], n, 1)
+                        # printMatrix(answer[1][j], n, 2)
+                        # printMatrix(answer[2][k], n, 3)
                         max = sum
 
     
@@ -149,6 +170,8 @@ def GetFruitSum(_route_a:list, _route_b:list, _route_c:list):
     
     return sum
     
+# for i in range(len(answer[0])):
+#     print(answer[0][i])
 
 print(GetMaxFruit())
 
