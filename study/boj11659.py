@@ -22,5 +22,3 @@ for j in range(M):
     num_sum = array_sum[num_end] - array_sum[num_begin]
 
     print(num_sum + array_input[num_begin])
-
-
