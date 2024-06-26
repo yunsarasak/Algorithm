@@ -1,10 +1,14 @@
-num_of_kids, num_of_stick = list(map(int, input().split()))
+from sys import stdin
+#n = int(stdin.readline())
+
+num_of_kids, num_of_stick = list(map(int, stdin.readline().split()))
+
 
 #print(num_of_kids, num_of_stick)
 
 stick_array = list()
 
-input_list = list(map(int,input().split()))
+input_list = list(map(int,stdin.readline().split()))
 stick_array = input_list.copy()
 
 stick_array.sort()
