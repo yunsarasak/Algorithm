@@ -31,21 +31,21 @@ def CountPoints(_begin:int, _end:int):
     global list_points
     #begin 보다 작거나 같은 값중 가장 큰 값
     b_index = GetIndex(_begin)
-    print("%d보다 작거나 같은 값중 가장 큰 값은 %d"%(_begin,list_points[b_index]))
+    # print("%d보다 작거나 같은 값중 가장 큰 값은 %d"%(_begin,list_points[b_index]))
     
     #end 보다 크거나 같은 값중 가장 작은 값
     e_index = GetIndex(_end)
-    print("%d보다 크거나 같은 값중 가장 작은 값은 %d"%(_end,list_points[e_index]))
+    # print("%d보다 크거나 같은 값중 가장 작은 값은 %d"%(_end,list_points[e_index]))
 
     #index 차이를 구하기 ( 개수 )
-    point_included = e_index - b_index + 1
+    point_included = e_index - b_index
 
     #포함 여부 판단
-    # if list_points[b_index] == _begin:
-    #     point_included += 1
+    if list_points[b_index] >= _begin:
+        point_included += 1
 
-    # if list_points[e_index] == _end:
-    #     point_included += 1
+    if list_points[e_index] <= _end:
+        point_included += 1
 
     return point_included
 
@@ -65,9 +65,13 @@ for i in range(M):
     
     answer.append(CountPoints(begin, end))
 
-#print(GetIndex(11))
 
+# GetIndex(9)
+
+# GetIndex(10)
+
+# GetIndex(11)
 
 # print(answer)
 for i in answer:
-    print(i)
+    print(i - 1)
